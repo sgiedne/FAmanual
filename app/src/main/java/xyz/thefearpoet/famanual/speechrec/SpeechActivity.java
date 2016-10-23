@@ -1,7 +1,6 @@
 package xyz.thefearpoet.famanual.speechrec;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +9,27 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 import xyz.thefearpoet.famanual.R;
 
@@ -27,8 +37,8 @@ public class SpeechActivity extends Activity {
     private static final int REQUEST_CODE = 1234;
     Button Start;
     TextView Speech;
-    Dialog match_text_dialog;
-    ListView textlist;
+    TextView Result;
+    String query;
     ArrayList<String> matches_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +46,9 @@ public class SpeechActivity extends Activity {
         setContentView(R.layout.activity_speech);
         Start = (Button)findViewById(R.id.start_reg);
         Speech = (TextView)findViewById(R.id.speech);
+        Result = (TextView)findViewById(R.id.tvResult);
 
-        Start.setOnClickListener(new OnClickListener() {
+        Start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isConnected()){
@@ -58,10 +69,12 @@ public class SpeechActivity extends Activity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Please Connect to Internet", Toast.LENGTH_LONG).show();
-                }}
+                }
+          }
 
-        });
+      });
     }
+
     public  boolean isConnected()
     {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -72,29 +85,55 @@ public class SpeechActivity extends Activity {
             return false;
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            matches_text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+           query = matches_text.get(0);
+           Speech.setText("QUERY : " + query);
 
-            match_text_dialog = new Dialog(SpeechActivity.this);
-            match_text_dialog.setContentView(R.layout.activity_speech_dialoguematches);
-            match_text_dialog.setTitle("Select Matching Text");
-            textlist = (ListView)match_text_dialog.findViewById(R.id.list);
-            matches_text = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            ArrayAdapter<String> adapter =    new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, matches_text);
-            textlist.setAdapter(adapter);
-            textlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+
+            Thread t = new Thread(new Runnable() {
+                private HttpResponse response;
+
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    Speech.setText("You have said " +matches_text.get(position));
-                    match_text_dialog.hide();
+                public void run() {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost("http://www.famanual.com/manual_app/ask/");
+
+                    List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+                    nameValuePair.add(new BasicNameValuePair("query", query));
+
+                    //Encoding POST data
+                    try {
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+                    }catch (UnsupportedEncodingException e){
+                        e.printStackTrace();
+                    }
+                    try {
+                        // write response to log
+                       // this.response = httpClient.execute(httpPost);
+                       // HttpEntity entity = response.getEntity();
+
+                        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                        String response = httpClient.execute(httpPost, responseHandler);
+
+
+                        Log.d("Http Post Response-->>",  response);
+                    } catch (ClientProtocolException e) {
+                        // Log exception
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // Log exception
+                        e.printStackTrace();
+                    }
+
                 }
             });
-            match_text_dialog.show();
-
+            t.start();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

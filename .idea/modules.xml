@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FAmanual backup.iml" filepath="$PROJECT_DIR$/FAmanual backup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FAmanual.iml" filepath="$PROJECT_DIR$/FAmanual.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
