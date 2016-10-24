@@ -7,15 +7,16 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -30,11 +31,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import xyz.thefearpoet.famanual.R;
 
-public class SpeechActivity extends Activity {
+public class SpeechActivity extends Activity implements TextToSpeech.OnInitListener{
     private static final int REQUEST_CODE = 1234;
+    TextToSpeech t1;
     Button Start;
     TextView Speech;
     TextView Result;
@@ -93,14 +96,9 @@ public class SpeechActivity extends Activity {
            query = matches_text.get(0);
            Speech.setText("QUERY : " + query);
 
-
-
-
-            Thread t = new Thread(new Runnable() {
-                private HttpResponse response;
-
+            class MakePostRequest extends AsyncTask<String, Void, String> {
                 @Override
-                public void run() {
+                protected String doInBackground(String... urls){
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpPost httpPost = new HttpPost("http://www.famanual.com/manual_app/ask/");
 
@@ -115,14 +113,16 @@ public class SpeechActivity extends Activity {
                     }
                     try {
                         // write response to log
-                       // this.response = httpClient.execute(httpPost);
-                       // HttpEntity entity = response.getEntity();
+                        // this.response = httpClient.execute(httpPost);
+                        // HttpEntity entity = response.getEntity();
 
                         ResponseHandler<String> responseHandler = new BasicResponseHandler();
                         String response = httpClient.execute(httpPost, responseHandler);
 
+                        String result = new String(response);
 
                         Log.d("Http Post Response-->>",  response);
+                        return response;
                     } catch (ClientProtocolException e) {
                         // Log exception
                         e.printStackTrace();
@@ -130,11 +130,39 @@ public class SpeechActivity extends Activity {
                         // Log exception
                         e.printStackTrace();
                     }
-
+                    return "Sorry, I didn't understand that";
                 }
-            });
-            t.start();
+
+                @Override
+                protected void onPostExecute(String result) {
+                    Result.setText(result);
+                   // String words = Result.getText().toString();
+                }
+
+            }
+            MakePostRequest task = new MakePostRequest();
+            task.execute();
+
+            super.onActivityResult(requestCode, resultCode, data);
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
+        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.US);
+                }
+            }
+        });
+
+        String words = Result.getText().toString();
+        t1.speak("Hello", TextToSpeech.QUEUE_FLUSH, null);
+
+
+    }
+
+    @Override
+    public void onInit(int i) {
+
     }
 }
