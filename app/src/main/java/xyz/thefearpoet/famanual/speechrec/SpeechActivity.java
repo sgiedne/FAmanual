@@ -40,6 +40,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     TextToSpeech t1;
     Button Start;
     TextView Speech;
+    String words;
     TextView Result;
     String query;
     ArrayList<String> matches_text;
@@ -136,6 +137,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
                 @Override
                 protected void onPostExecute(String result) {
                     Result.setText(result);
+                    //console.log(result);
                    // String words = Result.getText().toString();
                 }
 
@@ -146,17 +148,17 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
             super.onActivityResult(requestCode, resultCode, data);
         }
 
+        words = Result.getText().toString();
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
                     t1.setLanguage(Locale.US);
+                    t1.speak(Result.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
         });
 
-        String words = Result.getText().toString();
-        t1.speak("Hello", TextToSpeech.QUEUE_FLUSH, null);
 
 
     }
