@@ -3,36 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="xyz.thefearpoet.famanual.speechrec.SpeechActivity" >
+    tools:context="xyz.thefearpoet.famanual.speechrec.SpeechActivity"
+    android:weightSum="1"
+    android:background="@android:color/darker_gray">
 
     <TextView
-        android:id="@+id/welcome"
+        android:id="@+id/txtEmergency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:layout_gravity="center"
-        android:text="Speech Recognotion" />
+        android:text="First Aid Manual"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" />
+
+    <TextView
+        android:id="@+id/txtQuestion"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right" />
+
+    <TextView
+        android:id="@+id/txtAnswer"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left" />
 
     <Button
-        android:id="@+id/start_reg"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnStart"
+        android:layout_width="181dp"
         android:layout_height="wrap_content"
+        android:text="Start"
+
         android:layout_gravity="center"
-        android:text="Start Speech Recognition" />
-
-    <TextView
-        android:id="@+id/speech"
-        android:textSize="25sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-    <TextView
-        android:id="@+id/tvResult"
-        android:textSize="25sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:background="@color/colorPrimaryDark" />
 
 </LinearLayout>

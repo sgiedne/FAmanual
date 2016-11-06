@@ -41,6 +41,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     Button Start;
     TextView Speech;
     String words;
+    String logTag;
     TextView Result;
     String query;
     ArrayList<String> matches_text;
@@ -48,9 +49,10 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
-        Start = (Button)findViewById(R.id.start_reg);
-        Speech = (TextView)findViewById(R.id.speech);
-        Result = (TextView)findViewById(R.id.tvResult);
+        logTag = "First Aid Manual";
+        Start = (Button)findViewById(R.id.btnStart);
+        Speech = (TextView)findViewById(R.id.txtQuestion);
+        Result = (TextView)findViewById(R.id.txtAnswer);
 
         Start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,21 +60,35 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
                 if(isConnected()){
                     try {
                         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
                         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
                         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech recognition demo");
                         startActivityForResult(intent, REQUEST_CODE);
+
                     } catch(ActivityNotFoundException e) {
                         String appPackageName = "com.google.android.googlequicksearchbox";
                         try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                            startActivity(
+                                    new Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("market://details?id=" + appPackageName)));
                         } catch (android.content.ActivityNotFoundException anfe) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                            startActivity(
+                                    new Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse(
+                                                    "https://play.google.com/store/apps/details?id="
+                                                            + appPackageName)));
                         }
                     }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Please Connect to Internet", Toast.LENGTH_LONG).show();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Please Connect to Internet",
+                            Toast.LENGTH_LONG).show();
                 }
           }
 
@@ -95,7 +111,9 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             matches_text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
            query = matches_text.get(0);
-           Speech.setText("QUERY : " + query);
+
+            // render the query
+           Speech.setText("\"" + query+ "\"");
 
             class MakePostRequest extends AsyncTask<String, Void, String> {
                 @Override
@@ -122,7 +140,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
 
                         String result = new String(response);
 
-                        Log.d("Http Post Response-->>",  response);
+                        Log.d(logTag,  response);
                         return response;
                     } catch (ClientProtocolException e) {
                         // Log exception
