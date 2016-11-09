@@ -20,6 +20,7 @@ android {
     android {
         useLibrary 'org.apache.http.legacy'
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/font'] } }
 }
 
 dependencies {

@@ -4,42 +4,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="xyz.thefearpoet.famanual.speechrec.SpeechActivity"
-    android:weightSum="1"
-    android:background="@android:color/darker_gray">
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/txtEmergency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:layout_gravity="center"
         android:text="First Aid Manual"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" />
-
-    <TextView
-        android:id="@+id/txtQuestion"
-        android:textSize="25sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right" />
-
-    <TextView
-        android:id="@+id/txtAnswer"
-        android:textSize="25sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left" />
-
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:text="Start"
-
         android:layout_gravity="center"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:background="@color/colorPrimaryDark" />
+        android:textColor="#263238"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif" />
+
+    <TextView
+        android:layout_gravity="end"
+        android:textAlignment="textEnd"
+        android:textColor="#263238"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtQuestion"
+        android:layout_marginTop="10dp"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_gravity="start"
+        android:textAlignment="textStart"
+        android:textColor="#263238"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAnswer"
+        android:layout_marginTop="15dp"
+        android:padding="8dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginBottom="56dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
 </LinearLayout>
