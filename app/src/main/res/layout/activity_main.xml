@@ -25,11 +25,11 @@
             android:layout_gravity="center" />
 
         <TextView
-            android:id="@+id/txtEmergency"
+            android:id="@+id/txtIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
-            android:text="How can I help you?"
+            android:text=""
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:textColor="#263238"
