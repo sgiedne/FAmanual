@@ -26,7 +26,7 @@
         android:textAlignment="textEnd"
         android:textColor="#263238"
         android:textSize="20dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtQuestion"
         android:layout_marginTop="10dp"
