@@ -92,13 +92,16 @@ public class MainActivity extends AppCompatActivity {
                     String userQuestion = (result.get(0));
                     String response = "I can help you with that. First, do this..";
                     String emergency = "Thermal Burn";
+
+                    // go to speech rec activity
                     Intent intent =  new Intent(this, SpeechActivity.class);
                     intent.putExtra("QUERY", userQuestion);
+                    intent.putExtra("emergency", emergency);
+                    intent.putExtra("response", response);
 
                     startActivity(intent);
                     finish();
 
-                    // go to speech rec activity
                 }
                 break;
             }

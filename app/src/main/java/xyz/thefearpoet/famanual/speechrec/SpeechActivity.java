@@ -48,6 +48,9 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     // response to the question
     TextView answer;
 
+    // title of the first-aid procedure
+    TextView emergency;
+
     String words;
     String logTag;
     String query;
@@ -63,7 +66,12 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
         start = (Button)findViewById(R.id.btnStart);
         question = (TextView)findViewById(R.id.txtQuestion);
         answer = (TextView)findViewById(R.id.txtAnswer);
-        question.setText(getIntent().getExtras().getString("QUERY"));
+        emergency = (TextView)findViewById(R.id.txtEmergency);
+
+        question.setText("\""+(getIntent().getExtras().getString("QUERY"))+"\"");
+        answer.setText(getIntent().getExtras().getString("response"));
+        emergency.setText(getIntent().getExtras().getString("emergency"));
+
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
