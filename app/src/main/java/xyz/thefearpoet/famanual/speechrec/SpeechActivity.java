@@ -63,7 +63,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
         start = (Button)findViewById(R.id.btnStart);
         question = (TextView)findViewById(R.id.txtQuestion);
         answer = (TextView)findViewById(R.id.txtAnswer);
-
+        question.setText(getIntent().getExtras().getString("QUERY"));
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

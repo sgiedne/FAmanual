@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import xyz.thefearpoet.famanual.R;
+import xyz.thefearpoet.famanual.speechrec.SpeechActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
                     String userQuestion = (result.get(0));
                     String response = "I can help you with that. First, do this..";
                     String emergency = "Thermal Burn";
+                    Intent intent =  new Intent(this, SpeechActivity.class);
+                    intent.putExtra("QUERY", userQuestion);
+
+                    startActivity(intent);
+                    finish();
 
                     // go to speech rec activity
                 }
