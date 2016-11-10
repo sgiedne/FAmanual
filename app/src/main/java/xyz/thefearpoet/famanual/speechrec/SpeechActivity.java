@@ -38,23 +38,33 @@ import xyz.thefearpoet.famanual.R;
 public class SpeechActivity extends Activity implements TextToSpeech.OnInitListener{
     private static final int REQUEST_CODE = 1234;
     TextToSpeech t1;
-    Button Start;
-    TextView Speech;
+
+    // start button
+    Button start;
+
+    // question/speech by the user
+    TextView question;
+
+    // response to the question
+    TextView answer;
+
     String words;
     String logTag;
-    TextView Result;
     String query;
     ArrayList<String> matches_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
-        logTag = "First Aid Manual";
-        Start = (Button)findViewById(R.id.btnStart);
-        Speech = (TextView)findViewById(R.id.txtQuestion);
-        Result = (TextView)findViewById(R.id.txtAnswer);
 
-        Start.setOnClickListener(new View.OnClickListener() {
+        logTag = "First Aid Manual";
+        start = (Button)findViewById(R.id.btnStart);
+        question = (TextView)findViewById(R.id.txtQuestion);
+        answer = (TextView)findViewById(R.id.txtAnswer);
+
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isConnected()){
@@ -113,7 +123,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
            query = matches_text.get(0);
 
             // render the query
-           Speech.setText("\"" + query+ "\"");
+            question.setText("\"" + query+ "\"");
 
             class MakePostRequest extends AsyncTask<String, Void, String> {
                 @Override
@@ -154,7 +164,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
 
                 @Override
                 protected void onPostExecute(String result) {
-                    Result.setText(result);
+                    answer.setText(result);
                     //console.log(result);
                    // String words = Result.getText().toString();
                 }
@@ -166,13 +176,13 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        words = Result.getText().toString();
+        words = answer.getText().toString();
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
                     t1.setLanguage(Locale.US);
-                    t1.speak(Result.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                    t1.speak(answer.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
         });
