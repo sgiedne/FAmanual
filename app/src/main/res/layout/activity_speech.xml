@@ -1,65 +1,87 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="xyz.thefearpoet.famanual.speechrec.SpeechActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="xyz.thefearpoet.famanual.speechrec.SpeechActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtEmergency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:textColor="#263238"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif" />
-
-    <TextView
-        android:layout_gravity="end"
-        android:textAlignment="textEnd"
-        android:textColor="#263238"
-        android:textSize="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtQuestion"
-        android:layout_marginTop="10dp"
-        android:padding="8dp" />
-
-    <TextView
-        android:layout_gravity="start"
-        android:textAlignment="textStart"
-        android:textColor="#263238"
-        android:textSize="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtAnswer"
-        android:layout_marginTop="15dp"
-        android:padding="8dp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="181dp"
+        <TextView
+            android:id="@+id/txtEmergency"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-
+            android:textSize="30sp"
             android:layout_gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:background="@color/colorPrimaryDark"
-            android:layout_marginBottom="56dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+            android:textColor="#263238"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:layout_gravity="end"
+            android:textAlignment="textEnd"
+            android:textColor="#263238"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtQuestion"
+            android:layout_marginTop="10dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:maxLines="14"
+            android:scrollbars = "vertical"
+            android:layout_gravity="start"
+            android:textAlignment="textStart"
+            android:textColor="#263238"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtAnswer"
+            android:layout_marginTop="15dp"
+            android:padding="8dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="181dp"
+                android:layout_height="wrap_content"
+                android:text="Speak"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginBottom="56dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:textSize="32dp"
+                android:id="@+id/txtInit" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:color/background_light"
+                android:layout_above="@+id/btnStart"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="60dp"
+                android:id="@+id/imageView" />
+        </RelativeLayout>
 
 </LinearLayout>

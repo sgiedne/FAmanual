@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context="xyz.thefearpoet.famanual.main.MainActivity"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
