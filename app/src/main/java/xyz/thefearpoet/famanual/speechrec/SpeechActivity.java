@@ -14,7 +14,7 @@ import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,8 +52,10 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     private static final int REQUEST_CODE = 1234;
     TextToSpeech t1, read;
 
+    String def;
+
     // start button
-    Button start;
+    ImageButton start;
 
     String picres;
 
@@ -76,6 +78,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     String logTag;
     String query;
     static Boolean renderImage;
+    static Boolean renderDef;
     ArrayList<String> matches_text;
 
     @Override
@@ -86,7 +89,8 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
 
         logTag = "First Aid Manual";
         renderImage = false;
-        start = (Button)findViewById(R.id.btnStart);
+        renderDef = false;
+        start = (ImageButton) findViewById(R.id.btnStart);
         question = (TextView)findViewById(R.id.txtQuestion);
         answer = (TextView)findViewById(R.id.txtAnswer);
         emergency = (TextView)findViewById(R.id.txtEmergency);
@@ -204,21 +208,22 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
 
 
         if(m1.find() || m2.find() || m3.find() || m4.find() || m5.find()){
+
             Log.d("test","INSIDE IF 1");
             return "http://Sample-env-2.pfnhucvzdb.us-west-2.elasticbeanstalk.com/manual_app/ask4/";
         } else if(m6.find() || m7.find()){
+
             Log.d("test","INSIDE IF 2");
-
            SearchGoogle searchGoogle = new SearchGoogle();
-            String def = searchGoogle.searchFor(query);
+            def = searchGoogle.searchFor(query);
             Log.d("test",def);
-//            answer.setText(def);
-
             renderImage = true;
-            return def;
+            return "http://Sample-env-2.pfnhucvzdb.us-west-2.elasticbeanstalk.com/manual_app/ask1/";
+
         }else if(m8.find() || m9.find() || m11.find() || m12.find() || m13.find() || m14.find()
                 || m15.find() || m16.find() || m17.find() || m18.find() || m19.find() || m20.find()
                 || m21.find() || m22.find() || m23.find() || m24.find() || m25.find()){
+
             Log.d("test", "INSIDE IF 3");
             return "http://Sample-env-2.pfnhucvzdb.us-west-2.elasticbeanstalk.com/manual_app/ask2/";
         }else if(m10.find()){
@@ -357,8 +362,8 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
 
                     String endPoint = getEndPoint(query);
                     Log.d("test",endPoint);
-                    if(renderImage)
-                        return endPoint;
+                    //if(renderImage)
+                    //    return endPoint;
                     HttpPost httpPost = new HttpPost(endPoint);
 
                     List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
@@ -394,12 +399,22 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
 
                 @Override
                 protected void onPostExecute(String result) {
-                    if(!renderImage)
-                        answer.setText(result);
-
+                    if(!renderImage) {
+                        if(result.equals("looking online"))
+                            answer.setText(def);
+                        else
+                            answer.setText(result);
+                        def = "";
+                    }
                     //if the query is a "what is" question, then render an image
                     if(renderImage){
+                        Log.d("test3",def);
+                        if(result.equalsIgnoreCase("looking online"))
+                            answer.setText(def);
+                        else
+                            answer.setText(result);
 
+                        def = "";
                         String imageUrl = bingSearch(query);
                         //picres = "";
                         Log.d("test1", imageUrl);
@@ -408,8 +423,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
                         Picasso.with(getApplicationContext())
                                 .load(imageUrl)
                                 .into(imageView);
-                        answer.setText(result);
-                        answer.setText(result);
+                       // answer.setText(result);
 
 //                        SearchGoogle searchGoogle = new SearchGoogle();
 //                        String def = searchGoogle.searchFor(query);
