@@ -46,42 +46,57 @@
             android:layout_marginTop="15dp"
             android:padding="8dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/btnStart"
-                android:layout_width="181dp"
-                android:layout_height="wrap_content"
-                android:text="Speak"
-                android:textSize="20dp"
-                android:textColor="#ffffff"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-                android:layout_gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:background="@color/colorPrimaryDark"
-                android:layout_marginBottom="56dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:textSize="32dp"
+            android:id="@+id/txtInit" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="80dp"
-                android:textSize="32dp"
-                android:id="@+id/txtInit" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:color/background_light"
+            android:layout_above="@+id/btnStart"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/imageView" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:color/background_light"
-                android:layout_above="@+id/btnStart"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="60dp"
-                android:id="@+id/imageView" />
-        </RelativeLayout>
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:text="Speak"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginBottom="86dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:maxWidth="100dp"-->
+            <!--android:maxHeight="100dp"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--app:srcCompat="@mipmap/speak"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:id="@+id/btnStart"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="44dp" />-->
+    </RelativeLayout>
 
 </LinearLayout>

@@ -14,7 +14,7 @@ import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +55,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
     String def;
 
     // start button
-    ImageButton start;
+    Button start;
 
     String picres;
 
@@ -90,7 +90,7 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
         logTag = "First Aid Manual";
         renderImage = false;
         renderDef = false;
-        start = (ImageButton) findViewById(R.id.btnStart);
+        start = (Button) findViewById(R.id.btnStart);
         question = (TextView)findViewById(R.id.txtQuestion);
         answer = (TextView)findViewById(R.id.txtAnswer);
         emergency = (TextView)findViewById(R.id.txtEmergency);
@@ -402,6 +402,8 @@ public class SpeechActivity extends Activity implements TextToSpeech.OnInitListe
                     if(!renderImage) {
                         if(result.equals("looking online"))
                             answer.setText(def);
+                        else if(result.equals("something else"))
+                            answer.setText("I don't know");
                         else
                             answer.setText(result);
                         def = "";
